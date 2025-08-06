@@ -62,8 +62,8 @@ This project was inspired by the heartbreaking yet powerful stories of survivors
 
 ## 🗃️ Data Used
 
-| Dataset | Source | Description |
-|--------|--------|-------------|
+| Dataset | Source | 
+|--------|--------|
 | `human_trafficking_data.xls` and sexual_assault.csv | UNODC |
 
 ---
