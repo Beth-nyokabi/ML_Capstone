@@ -1,97 +1,133 @@
-# 🧠 Global Mental Health Disorder Prediction – Project Template
+# 💻 Sexual Violence & Trafficking Awareness – Capstone Project
 
-This document outlines the full project template including phases, tasks, modules and deliverables to guide development from start to finish.
+## 🧠 Overview
 
----
-
-## ✅ Project Phases
-
-### Phase 1: 💡 Problem Definition
-- [ ] Define the core research question
-- [ ] Identify outcome variable (target: mental disorder likelihood)
-- [ ] Set project goals (policy insight, risk prediction, dashboard)
+This project uses data science and visual storytelling to highlight patterns in sexual violence and trafficking across Kenya, Africa and the world. By analyzing publicly available data and visualizing key insights, the project aims to raise awareness, inform policy discussions and drive meaningful change.
 
 ---
 
-### Phase 2: 📥 Data Collection
-- [ ] Identify relevant datasets (WHO, CDC, GBD, Reddit, etc.)
-- [ ] Download and catalog datasets
-- [ ] Document data sources and licenses
+## ❓ What Does This Project Do?
+
+- Identifies patterns and trends in sexual violence and trafficking.
+- Presents visual evidence of underreporting and regional disparities.
+- Builds an interactive and educational platform for awareness and advocacy.
 
 ---
 
-### Phase 3: 🧹 Data Cleaning & Preprocessing
-- [ ] Merge and align datasets
-- [ ] Handle missing values and outliers
-- [ ] Encode categorical variables
-- [ ] Normalize or scale numerical features
-- [ ] Save processed data to `data/processed/`
+## 🚨 Problem Statement
+
+Sexual violence and trafficking remain deeply underreported and misunderstood issues, especially in African contexts. Victims are often silenced by stigma, weak enforcement and poor data visibility. This project bridges the gap between **raw data** and **public understanding**.
 
 ---
 
-### Phase 4: 📊 Exploratory Data Analysis (EDA)
-- [ ] Plot distribution of mental health metrics
-- [ ] Identify global/regional disparities
-- [ ] Correlate mental health with socioeconomic indicators
-- [ ] Document findings in `notebooks/01_data_exploration.ipynb`
+## 👥 Target Audience
+
+- NGOs, policy makers, activists
+- Survivors and support organizations
+- Researchers and journalists
+- Concerned citizens and educators
 
 ---
 
-### Phase 5: 🧠 Modeling
-- [ ] Select baseline models: Logistic Regression, Random Forest, etc.
-- [ ] Train/test split or cross-validation
-- [ ] Evaluate performance (ROC-AUC, accuracy, F1-score)
-- [ ] Perform hyperparameter tuning
-- [ ] Save final model in `models/`
+## 💡 Inspiration
+
+This project was inspired by the heartbreaking yet powerful stories of survivors, particularly in regions where their voices go unheard. It stems from a desire to use data for good: to reveal truths, challenge systems and stand in solidarity with victims.
 
 ---
 
-### Phase 6: 📈 Visualization & Reporting
-- [ ] Create visuals: heatmaps, bar charts, maps
-- [ ] Summarize key insights from model
-- [ ] Write report and export to PDF (`reports/final_report.pdf`)
-- [ ] Prepare presentation or dashboard (Streamlit/PowerPoint)
+## 🌍 Why It Matters
+
+- Survivors deserve justice and visibility.
+- Data can strengthen advocacy and legislation.
+- A well-informed public can drive systemic change.
 
 ---
 
-### Phase 7: 🚀 (Optional) Deployment
-- [ ] Build web app using Streamlit or Flask
-- [ ] Allow input of demographic data to predict risk
-- [ ] Host locally or on Render/Heroku
-- [ ] Create `app.py` and `requirements.txt`
+## 🕳️ The Gap This Project Fills
+
+- Lack of localized, visualized data in Kenya and much of Africa.
+- Minimal digital tools connecting data to survivor stories.
+- Few platforms that mix data science with gender-based violence advocacy.
 
 ---
 
-## 🧩 Core Modules
+## ✨ Main Features
 
-| Module | Description |
-|--------|-------------|
-| `data_loader.py` | Functions to load raw and processed data |
-| `preprocessing.py` | Data cleaning, encoding, and scaling functions |
-| `model.py` | ML training, validation, and saving logic |
-| `utils.py` | Helper functions (metrics, plots, etc.) |
+- 📊 Interactive visualizations (Kenya, Africa, Global)
+- 📉 Risk classification model (ML)
+- 📁 Structured datasets for further research
+- 🧵 Survivor-centered narrative integration
 
 ---
 
-## 📁 Folder Guide
-mental-health-prediction/
+## 🗃️ Data Used
+
+| Dataset | Source | 
+|--------|--------|
+| `human_trafficking_data.xls` and sexual_assault.csv | UNODC |
+
+---
+
+## 🧪 Analytical Methods & Tools
+
+| Tool/Library | Purpose |
+|--------------|---------|
+| Python | Core programming language |
+| Pandas | Data manipulation and cleaning |
+| Matplotlib / Seaborn | Static data visualizations |
+| Jupyter Notebook | Notebook-based analysis |
+| Tempo | Custom web styling |
+| Markdown | Project documentation |
+
+### 🔍 Analytical Approaches
+
+- **Regression**  
+  Predict future violence trends using historical and socioeconomic indicators.
+
+- **Classification**  
+  Identify countries or years with high/low risk of trafficking or violence using ML.
+
+- **Models Applied**
+  - Logistic Regression
+  - KNN
+  - Random Forest 
+  - Decision Trees
+
+---
+
+## 📈 Key Insights & Results
+
+- 📈 Sub-Saharan Africa has a rising trend in underage trafficking post-pandemic.
+- 🔍 Male victims are significantly underreported but not absent.
+- 🧩 Visualizations reveal gaps in documentation and survivor support.
+
+---
+
+## 🗂️ Project Structure
+
+```bash
+📦 sexual-violence-awareness/
 │
-├── data/ # raw/ processed/ external/
-├── notebooks/ # .ipynb files for EDA, modeling, reporting
-├── models/ # trained models
-├── reports/ # visuals, final report
-├── src/ # Python scripts (modular)
-├── app.py # Optional: Streamlit/Flask app
-├── requirements.txt
-└── README.md
-
-
----
-
-## 📚 References
-
-- WHO Global Mental Health Surveys
-- CDC Public Health Indicators
-- IHME Global Burden of Disease
-- SMHD, DAIC-WOZ, MODMA datasets
-
+├── 📁 data/                   # All datasets (raw and cleaned)
+│   ├── kenya_sexual_violence.csv
+│   ├── africa_trafficking_data.csv
+│   └── global_violence_data.xlsx
+│
+├── 📁 notebooks/              # Jupyter Notebooks for analysis
+│   └── analysis.ipynb
+│
+├── 📁 visualizations/         # Static and exported plots
+│   ├── trafficking_trends.png
+│   ├── survivors_by_gender.png
+│   
+│
+├── 📁 website/                # Optional manual website files
+│   ├── index.html
+│   ├── style.css
+│   └── assets/
+│       └── images/
+│
+├── 📄 README.md               # General overview
+├── 📄 PROJECT_TEMPLATE.md     # This document
+├── 📄 requirements.txt        # Python dependencies
+└── 📄 LICENSE
