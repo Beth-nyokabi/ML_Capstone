@@ -1,73 +1,67 @@
 import streamlit as st
 import pandas as pd
 import joblib
-import numpy as np
-import matplotlib.pyplot as plt
-import seaborn as sns
 
-# Load the trained model and features
-model = joblib.load("random_forest_model.pkl")
+# === Load the model and feature names ===
+model = joblib.load("final_model.pkl")
 feature_names = joblib.load("feature_names.pkl")
 
-st.set_page_config(page_title="Trafficking Risk Predictor", layout="centered")
+# === Page Configuration ===
+st.set_page_config(page_title="Trafficking Risk Classifier", layout="centered")
 
-st.title("🚨 Human Trafficking Risk Prediction App")
-st.write("Enter country-level data to predict if it's at high risk for sexual exploitation-related trafficking.")
+st.title("🚨 Human Trafficking Risk Classifier")
+st.markdown("Enter country-specific indicators to predict whether a country is **High Risk (1)** or **Low Risk (0)** for human trafficking.")
 
-# --- User Inputs ---
-age_0_14 = st.slider("Population aged 0-14 (%)", 0.0, 50.0, 20.0)
-age_15_64 = st.slider("Population aged 15-64 (%)", 0.0, 80.0, 60.0)
-female_employment = st.slider("Female employment rate (%)", 0.0, 100.0, 50.0)
-internet_users = st.slider("Internet users (%)", 0.0, 100.0, 40.0)
-gender_inequality = st.slider("Gender Inequality Index", 0.0, 1.0, 0.4)
+# === User Input Section ===
 
-category = st.selectbox("Category of Violence", [
-    "Other Perpetrator known to the victim",
-    "Perpetrator unknown to the victim",
-    "Relationship to perpetrator is not known",
-    "Sexual Exploitation",
-    "Sexual violence: Other acts of sexual violence",
-    "Sexual violence: Rape or attempted rape",
-    "Trafficking"
+st.subheader("📥 Input Country Indicators")
+
+year = st.slider("Year", min_value=1990, max_value=2025, value=2020)
+
+victim_female = st.selectbox("Victim Female Proportion High?", ["Yes", "No"])
+violence_reported = st.selectbox("Sexual Violence Reported?", ["Yes", "No"])
+
+# These categories should match those in your dataset — adjust them as needed
+region = st.selectbox("Region", ["Africa", "Americas", "Asia", "Europe", "Oceania"])
+subregion = st.selectbox("Subregion", [
+    "Eastern Africa", "Middle Africa", "Northern Africa", "Southern Africa", "Western Africa",
+    "Caribbean", "Central America", "South America", "Northern America",
+    "Central Asia", "Eastern Asia", "South-Eastern Asia", "Southern Asia", "Western Asia",
+    "Eastern Europe", "Northern Europe", "Southern Europe", "Western Europe",
+    "Australia and New Zealand", "Melanesia", "Micronesia", "Polynesia"
+])
+category = st.selectbox("Form of Trafficking Reported", [
+    "Forced Labour", "Forced Marriage", "Organ Removal", "Other", "Perpetrator known to the victim",
+    "Perpetrator unknown to the victim", "Relationship to perpetrator is not known", 
+    "Sexual Exploitation", "Sexual violence: Other acts of sexual violence"
 ])
 
-# --- Prepare Input ---
-input_dict = {
-    'Age_0_14': age_0_14,
-    'Age_15_64': age_15_64,
-    'Female_employment_rate': female_employment,
-    'Internet_users': internet_users,
-    'Gender_Inequality_Index': gender_inequality,
-    'Category': category
+# === Build input row as dictionary ===
+input_data = {
+    "Year": year,
+    "Victim Female Proportion High": 1 if victim_female == "Yes" else 0,
+    "Sexual violence reported": 1 if violence_reported == "Yes" else 0,
+    f"Region_{region}": 1,
+    f"Subregion_{subregion}": 1,
+    f"Category_{category}": 1
 }
 
-input_df = pd.DataFrame([input_dict])
+# === Initialize all other features with 0 ===
+input_df = pd.DataFrame(columns=feature_names)
+input_df.loc[0] = 0  # Fill all with 0
 
-# --- One-Hot Encode like training ---
-input_df = pd.get_dummies(input_df)
+# === Update input_df with actual user values ===
+for feature, value in input_data.items():
+    if feature in input_df.columns:
+        input_df.at[0, feature] = value
 
-# Add missing columns with 0, reindex to match training features
-input_df = input_df.reindex(columns=feature_names, fill_value=0)
-
-# --- Make Prediction ---
-if st.button("🔍 Predict Risk"):
+# === Prediction ===
+if st.button("🚀 Predict Trafficking Risk"):
     prediction = model.predict(input_df)[0]
-    proba = model.predict_proba(input_df)[0][int(prediction)]
+    prediction_proba = model.predict_proba(input_df)[0][prediction]
 
+    st.markdown("### 🧠 Prediction Result")
     if prediction == 1:
-        st.error(f"🔴 High Risk of Sexual Exploitation (Confidence: {proba:.2%})")
+        st.error(f"🔴 High Risk of Human Trafficking (Confidence: {prediction_proba:.2%})")
     else:
-        st.success(f"🟢 Low Risk (Confidence: {proba:.2%})")
-
-# --- Optional: Feature Importances ---
-if st.checkbox("📊 Show Feature Importance"):
-    importances = model.named_steps['rf'].feature_importances_
-    importance_df = pd.DataFrame({
-        'Feature': feature_names,
-        'Importance': importances
-    }).sort_values(by='Importance', ascending=False)
-
-    st.subheader("Top 15 Important Features")
-    fig, ax = plt.subplots(figsize=(8, 6))
-    sns.barplot(x="Importance", y="Feature", data=importance_df.head(15), ax=ax)
-    st.pyplot(fig)
+        st.success(f"🟢 Low Risk of Human Trafficking (Confidence: {prediction_proba:.2%})")
